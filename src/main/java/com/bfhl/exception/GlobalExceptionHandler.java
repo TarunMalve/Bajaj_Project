@@ -1,5 +1,6 @@
 package com.bfhl.exception;
 
+import com.bfhl.config.BfhlProperties;
 import com.bfhl.dto.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final String USER_ID = "tarun_malve_ddmmyyyy";
-    private static final String EMAIL = "YOUR_EMAIL";
-    private static final String ROLL_NUMBER = "YOUR_ROLL_NUMBER";
+    private final BfhlProperties bfhlProperties;
+
+    public GlobalExceptionHandler(BfhlProperties bfhlProperties) {
+        this.bfhlProperties = bfhlProperties;
+    }
 
     @ExceptionHandler({BadRequestException.class, MethodArgumentNotValidException.class})
     public ResponseEntity<ResponseDTO> handleBadRequest(Exception ex) {
@@ -27,9 +30,9 @@ public class GlobalExceptionHandler {
     private ResponseDTO buildFailureResponse() {
         ResponseDTO response = new ResponseDTO();
         response.setSuccess(false);
-        response.setUserId(USER_ID);
-        response.setEmail(EMAIL);
-        response.setRollNumber(ROLL_NUMBER);
+        response.setUserId(bfhlProperties.getUserId());
+        response.setEmail(bfhlProperties.getEmail());
+        response.setRollNumber(bfhlProperties.getRollNumber());
         response.setSum("0");
         response.setConcatString("");
         return response;

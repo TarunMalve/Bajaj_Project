@@ -1,5 +1,6 @@
 package com.bfhl.service;
 
+import com.bfhl.config.BfhlProperties;
 import com.bfhl.dto.RequestDTO;
 import com.bfhl.dto.ResponseDTO;
 import com.bfhl.service.impl.BFHLServiceImpl;
@@ -16,7 +17,11 @@ class BFHLServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        service = new BFHLServiceImpl();
+        BfhlProperties properties = new BfhlProperties();
+        properties.setUserId("tarun_malve_ddmmyyyy");
+        properties.setEmail("YOUR_EMAIL");
+        properties.setRollNumber("YOUR_ROLL_NUMBER");
+        service = new BFHLServiceImpl(properties);
     }
 
     @Test
@@ -77,5 +82,27 @@ class BFHLServiceImplTest {
         ResponseDTO response = service.process(request);
 
         assertEquals("EoDdCbAa", response.getConcatString());
+    }
+
+    @Test
+    void shouldTreatMixedAlphanumericAsSpecialCharacter() {
+        RequestDTO request = new RequestDTO();
+        request.setData(List.of("A1", "XYZ", "22"));
+
+        ResponseDTO response = service.process(request);
+
+        assertEquals(List.of("A1"), response.getSpecialCharacters());
+        assertEquals(List.of("XYZ"), response.getAlphabets());
+        assertEquals(List.of("22"), response.getEvenNumbers());
+    }
+
+    @Test
+    void shouldReturnEmptyConcatStringWhenNoAlphabetsPresent() {
+        RequestDTO request = new RequestDTO();
+        request.setData(List.of("1", "2", "$"));
+
+        ResponseDTO response = service.process(request);
+
+        assertEquals("", response.getConcatString());
     }
 }

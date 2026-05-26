@@ -1,5 +1,6 @@
 package com.bfhl.service.impl;
 
+import com.bfhl.config.BfhlProperties;
 import com.bfhl.dto.RequestDTO;
 import com.bfhl.dto.ResponseDTO;
 import com.bfhl.exception.BadRequestException;
@@ -11,9 +12,11 @@ import java.math.BigInteger;
 @Service
 public class BFHLServiceImpl implements BFHLService {
 
-    private static final String USER_ID = "tarun_malve_ddmmyyyy";
-    private static final String EMAIL = "YOUR_EMAIL";
-    private static final String ROLL_NUMBER = "YOUR_ROLL_NUMBER";
+    private final BfhlProperties bfhlProperties;
+
+    public BFHLServiceImpl(BfhlProperties bfhlProperties) {
+        this.bfhlProperties = bfhlProperties;
+    }
 
     @Override
     public ResponseDTO process(RequestDTO requestDTO) {
@@ -27,7 +30,6 @@ public class BFHLServiceImpl implements BFHLService {
 
         for (String item : requestDTO.getData()) {
             if (item == null || item.isBlank()) {
-                response.getSpecialCharacters().add(item == null ? "" : item);
                 continue;
             }
 
@@ -59,9 +61,9 @@ public class BFHLServiceImpl implements BFHLService {
     private ResponseDTO initSuccessResponse() {
         ResponseDTO response = new ResponseDTO();
         response.setSuccess(true);
-        response.setUserId(USER_ID);
-        response.setEmail(EMAIL);
-        response.setRollNumber(ROLL_NUMBER);
+        response.setUserId(bfhlProperties.getUserId());
+        response.setEmail(bfhlProperties.getEmail());
+        response.setRollNumber(bfhlProperties.getRollNumber());
         response.setSum("0");
         response.setConcatString("");
         return response;

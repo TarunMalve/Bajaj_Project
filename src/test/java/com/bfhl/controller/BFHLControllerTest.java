@@ -1,5 +1,6 @@
 package com.bfhl.controller;
 
+import com.bfhl.config.BfhlProperties;
 import com.bfhl.dto.RequestDTO;
 import com.bfhl.dto.ResponseDTO;
 import com.bfhl.service.BFHLService;
@@ -31,6 +32,9 @@ class BFHLControllerTest {
 
     @MockBean
     private BFHLService bfhlService;
+
+    @MockBean
+    private BfhlProperties bfhlProperties;
 
     @Test
     void shouldProcessBfhlEndpoint() throws Exception {

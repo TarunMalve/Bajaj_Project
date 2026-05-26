@@ -90,11 +90,14 @@ For `{"data": ["A", "ABCD", "DOE"]}`:
 
 ## Local Setup Instructions
 1. Ensure Java 21 and Maven are installed.
-2. Run the application:
+2. Update placeholder identity values in `src/main/resources/application.properties`:
+   - `bfhl.email`
+   - `bfhl.roll-number`
+3. Run the application:
    ```bash
    mvn spring-boot:run
    ```
-3. Run tests:
+4. Run tests:
    ```bash
    mvn test
    ```

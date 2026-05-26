@@ -2,6 +2,7 @@ com/bfhl/service/impl/BFHLServiceImpl.class
 com/bfhl/exception/BadRequestException.class
 com/bfhl/exception/GlobalExceptionHandler.class
 com/bfhl/BfhlApplication.class
+com/bfhl/config/BfhlProperties.class
 com/bfhl/dto/RequestDTO.class
 com/bfhl/controller/BFHLController.class
 com/bfhl/dto/ResponseDTO.class
